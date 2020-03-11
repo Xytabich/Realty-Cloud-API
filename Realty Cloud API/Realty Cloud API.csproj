@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <RootNamespace>RealtyCloudAPI</RootNamespace>
+    <AssemblyName>RealtyCloudAPI</AssemblyName>
+    <Authors>Xytabich</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove=".gitignore" />
+  </ItemGroup>
+
+</Project>
