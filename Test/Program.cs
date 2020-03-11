@@ -15,40 +15,42 @@ namespace Test
 		{
 			string address = "ENTER_ADDRESS_HERE";
 
-			var info = RealtyRequest.Search(address);
+			var noKeyRequest = new RealtyRequest();
+
+			var info = noKeyRequest.Search(address);
 			Console.WriteLine(ToXmlString(info));
 			Thread.Sleep(1000);
 
-			RealtyRequest.SearchAsync(address, s => Console.WriteLine(ToXmlString(s)), e => Console.WriteLine(e));
+			noKeyRequest.SearchAsync(address, s => Console.WriteLine(ToXmlString(s)), e => Console.WriteLine(e));
 			Thread.Sleep(1000);
 
-			RealtyRequest.apiKey = API_KEY;
+			var keyRequest = new RealtyRequest(API_KEY);
 
 			var request = new OrderRequest(false, new OrderRequestItem("EgrnRightList", info[0].CadastralNumber));
 
-			var order = RealtyRequest.CreateOrder(request);
+			var order = keyRequest.CreateOrder(request);
 			Console.WriteLine(ToXmlString(order));
 			Thread.Sleep(1000);
 
-			Console.WriteLine(ToXmlString(RealtyRequest.OrdersStatus(order.Items[0].OrderItemID)));
+			Console.WriteLine(ToXmlString(keyRequest.OrdersStatus(order.Items[0].OrderItemID)));
 			Thread.Sleep(1000);
 
-			Console.WriteLine(ToXmlString(RealtyRequest.GetObjectInfo(info[0].CadastralNumber)));
+			Console.WriteLine(ToXmlString(keyRequest.GetObjectInfo(info[0].CadastralNumber)));
 			Thread.Sleep(1000);
 
-			Console.WriteLine(ToXmlString(RealtyRequest.ProductsList()));
+			Console.WriteLine(ToXmlString(keyRequest.ProductsList()));
 			Thread.Sleep(1000);
 
-			RealtyRequest.CreateOrderAsync(request, s => Console.WriteLine(ToXmlString(s)), e => Console.WriteLine(e));
+			keyRequest.CreateOrderAsync(request, s => Console.WriteLine(ToXmlString(s)), e => Console.WriteLine(e));
 			Thread.Sleep(1000);
 
-			RealtyRequest.OrdersStatusAsync(new string[] { order.Items[0].OrderItemID }, s => Console.WriteLine(ToXmlString(s)), e => Console.WriteLine(e));
+			keyRequest.OrdersStatusAsync(new string[] { order.Items[0].OrderItemID }, s => Console.WriteLine(ToXmlString(s)), e => Console.WriteLine(e));
 			Thread.Sleep(1000);
 
-			RealtyRequest.GetObjectInfoAsync(info[0].CadastralNumber, s => Console.WriteLine(ToXmlString(s)), e => Console.WriteLine(e));
+			keyRequest.GetObjectInfoAsync(info[0].CadastralNumber, s => Console.WriteLine(ToXmlString(s)), e => Console.WriteLine(e));
 			Thread.Sleep(1000);
 
-			RealtyRequest.ProductsListAsync(s => Console.WriteLine(ToXmlString(s)), e => Console.WriteLine(e));
+			keyRequest.ProductsListAsync(s => Console.WriteLine(ToXmlString(s)), e => Console.WriteLine(e));
 			Thread.Sleep(20000);
 		}
 

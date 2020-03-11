@@ -15,17 +15,29 @@ namespace RealtyCloudAPI
 		/// <summary>
 		/// Сертификат для проверки сервера, при отправке запросов.
 		/// </summary>
-		public static X509Certificate certificate = null;
+		private X509Certificate certificate = null;
 		/// <summary>
 		/// Ключ API, если задан - отправляется вместе с запросом.
 		/// </summary>
-		public static string apiKey = null;
+		private string apiKey = null;
+
+		public RealtyRequest(X509Certificate certificate = null)
+		{
+			this.apiKey = null;
+			this.certificate = certificate;
+		}
+
+		public RealtyRequest(string apiKey, X509Certificate certificate = null)
+		{
+			this.apiKey = apiKey;
+			this.certificate = certificate;
+		}
 
 		/// <summary>
 		/// Поиск объектов по адресу.
 		/// </summary>
 		/// <returns>Список объектов или null (в случае непредвиденных ошибок)</returns>
-		public static ObjectBaseInfo[] Search(string target)
+		public ObjectBaseInfo[] Search(string target)
 		{
 			var request = new Request(new string[] {
 				SERVER,
@@ -51,7 +63,7 @@ namespace RealtyCloudAPI
 		/// </summary>
 		/// <param name="callback">Вызывается с результатом, в случае успеха.</param>
 		/// <param name="onError">Вызывается в случае ошибки</param>
-		public static void SearchAsync(string target, AsyncResponseCallback<ObjectBaseInfo[]> callback, AsyncResponseError onError = null)
+		public void SearchAsync(string target, AsyncResponseCallback<ObjectBaseInfo[]> callback, AsyncResponseError onError = null)
 		{
 			if(callback == null) throw new ArgumentNullException("callback");
 
@@ -72,7 +84,7 @@ namespace RealtyCloudAPI
 		/// Создание заказа на продукт(ы).
 		/// </summary>
 		/// <returns>Информация о запросе или значение по умолчанию (в случае непредвиденных ошибок)</returns>
-		public static OrderInfo CreateOrder(OrderRequest order)
+		public OrderInfo CreateOrder(OrderRequest order)
 		{
 			var request = new Request(new string[] {
 				SERVER,
@@ -96,7 +108,7 @@ namespace RealtyCloudAPI
 		/// </summary>
 		/// <param name="callback">Вызывается с результатом, в случае успеха.</param>
 		/// <param name="onError">Вызывается в случае ошибки</param>
-		public static void CreateOrderAsync(OrderRequest order, AsyncResponseCallback<OrderInfo> callback, AsyncResponseError onError = null)
+		public void CreateOrderAsync(OrderRequest order, AsyncResponseCallback<OrderInfo> callback, AsyncResponseError onError = null)
 		{
 			if(callback == null) throw new ArgumentNullException("callback");
 
@@ -115,7 +127,7 @@ namespace RealtyCloudAPI
 		/// Получение статуса заказов.
 		/// </summary>
 		/// <returns>Список статусов или null (в случае непредвиденных ошибок)</returns>
-		public static OrderStatusInfo[] OrdersStatus(params string[] ids)
+		public OrderStatusInfo[] OrdersStatus(params string[] ids)
 		{
 			var list = new string[ids.Length, 2];
 
@@ -155,7 +167,7 @@ namespace RealtyCloudAPI
 		/// </summary>
 		/// <param name="callback">Вызывается с результатом, в случае успеха.</param>
 		/// <param name="onError">Вызывается в случае ошибки</param>
-		public static void OrdersStatusAsync(string[] ids, AsyncResponseCallback<OrderStatusInfo[]> callback, AsyncResponseError onError = null)
+		public void OrdersStatusAsync(string[] ids, AsyncResponseCallback<OrderStatusInfo[]> callback, AsyncResponseError onError = null)
 		{
 			if(callback == null) throw new ArgumentNullException("callback");
 
@@ -190,7 +202,7 @@ namespace RealtyCloudAPI
 		/// Получение информации об объекте.
 		/// </summary>
 		/// <returns>Информация об объекте или значение по умолчанию (в случае непредвиденных ошибок)</returns>
-		public static ObjectData GetObjectInfo(string cadastralNumber)
+		public ObjectData GetObjectInfo(string cadastralNumber)
 		{
 			var request = new Request(new string[] {
 				SERVER,
@@ -215,7 +227,7 @@ namespace RealtyCloudAPI
 		/// </summary>
 		/// <param name="callback">Вызывается с результатом, в случае успеха.</param>
 		/// <param name="onError">Вызывается в случае ошибки</param>
-		public static void GetObjectInfoAsync(string cadastralNumber, AsyncResponseCallback<ObjectData> callback, AsyncResponseError onError = null)
+		public void GetObjectInfoAsync(string cadastralNumber, AsyncResponseCallback<ObjectData> callback, AsyncResponseError onError = null)
 		{
 			if(callback == null) throw new ArgumentNullException("callback");
 
@@ -235,7 +247,7 @@ namespace RealtyCloudAPI
 		/// Получение списка продуктов.
 		/// </summary>
 		/// <returns>Список продуктов или null (в случае непредвиденных ошибок)</returns>
-		public static ProductInfo[] ProductsList()
+		public ProductInfo[] ProductsList()
 		{
 			var request = new Request(new string[] {
 				SERVER,
@@ -259,7 +271,7 @@ namespace RealtyCloudAPI
 		/// </summary>
 		/// <param name="callback">Вызывается с результатом, в случае успеха.</param>
 		/// <param name="onError">Вызывается в случае ошибки</param>
-		public static void ProductsListAsync(AsyncResponseCallback<ProductInfo[]> callback, AsyncResponseError onError = null)
+		public void ProductsListAsync(AsyncResponseCallback<ProductInfo[]> callback, AsyncResponseError onError = null)
 		{
 			if(callback == null) throw new ArgumentNullException("callback");
 
